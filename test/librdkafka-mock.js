@@ -35,6 +35,8 @@ function Connection(globalConfig, topicConfig) {
 
 Connection.prototype.onEvent = function(cb) {
   t.equal(typeof cb, 'function', 'Callback must be a function');
+
+  this.onEvent = cb;
 };
 
 // Consumer
@@ -47,6 +49,8 @@ function KafkaConsumer(globalConfig, topicConfig) {
 
 KafkaConsumer.prototype.onRebalance = function(cb) {
   t.equal(typeof cb, 'function', 'Callback must be a function');
+
+  this.onRebalance = cb;
 };
 
 // Producer
