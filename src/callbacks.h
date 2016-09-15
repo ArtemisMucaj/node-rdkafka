@@ -115,6 +115,7 @@ struct delivery_report_t {
   int32_t partition;
   int64_t offset;
   std::string key;
+  std::string payload;
 
   explicit delivery_report_t(RdKafka::Message &);
   ~delivery_report_t();
