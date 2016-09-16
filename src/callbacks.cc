@@ -335,7 +335,7 @@ void DeliveryReportDispatcher::Flush() {
       Nan::Set(jsobj, Nan::New("offset").ToLocalChecked(),
         Nan::New<v8::Number>(_events[i].offset));
       Nan::Set(jsobj, Nan::New("payload").ToLocalChecked(),
-          Nan::New<v8::String>(_events[i].payload).ToLocalChecked());
+          Nan::New<v8::String>((const char*) _events[i].payload, (int) _events[i].length).ToLocalChecked());
       if (_events[i].key.empty()) {
         Nan::Set(jsobj, Nan::New("key").ToLocalChecked(), Nan::Null());
       } else {
@@ -356,7 +356,8 @@ delivery_report_t::delivery_report_t(RdKafka::Message &message) {
     topic_name = message.topic_name();
     partition = message.partition();
     offset = message.offset();
-    payload = (char*) message.payload();
+    payload = (const char*) message.payload();
+    length = message.len();
     if (message.key_len() > 0) {
       key = *message.key();
     } else {
